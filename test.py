@@ -12,8 +12,9 @@ def draw_faces(im, bboxes):
 
 
 if __name__ == "__main__":
-    impaths = "images"
+    impaths = "images/Taejin"
     impaths = glob.glob(os.path.join(impaths, "*.jpg"))
+    print(impaths)
     detector = face_detection.build_detector(
         "DSFDDetector",
         max_resolution=1080
@@ -23,9 +24,12 @@ if __name__ == "__main__":
         im = cv2.imread(impath)
         print("Processing:", impath)
         t = time.time()
+        dets = detector.detect(im)
+        print(dets)
         dets = detector.detect(
             im[:, :, ::-1]
         )[:, :4]
+        print(dets)
         print(f"Detection time: {time.time()- t:.3f}")
         draw_faces(im, dets)
         imname = os.path.basename(impath).split(".")[0]
